@@ -230,6 +230,106 @@
             }
         }
 
+        /* Money Wheel Magic */
+        .wheel-trigger {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            width: 80px;
+            height: 80px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 77, 0, 0.4);
+            z-index: 999;
+            transition: 0.3s;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .wheel-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+        }
+
+        .wheel-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            border: 10px solid #fff;
+            overflow: hidden;
+            transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1);
+        }
+
+        .wheel-segment {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            transform-origin: 100% 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: #000;
+            text-align: center;
+            padding-bottom: 50px;
+        }
+
+        .wheel-pointer {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            clip-path: polygon(50% 100%, 0 0, 100% 0);
+            z-index: 2001;
+        }
+
+        .win-modal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            color: #000;
+            padding: 40px;
+            border-radius: 30px;
+            text-align: center;
+            display: none;
+            z-index: 2002;
+            width: 300px;
+        }
+
         @media (max-width: 900px) {
             .main-stage {
                 grid-template-columns: 1fr;
@@ -307,7 +407,66 @@
     <!-- Live Social Proof Magic -->
     <div id="notif-container"></div>
 
+    <!-- Money Wheel System -->
+    <div class="wheel-trigger" onclick="openWheel()">🎡</div>
+
+    <div class="wheel-overlay" id="wheelOverlay">
+        <div class="wheel-pointer"></div>
+        <div class="wheel-container" id="wheel">
+            <!-- Segments injected via JS -->
+        </div>
+        <div class="win-modal" id="winModal">
+            <h2 id="winText">YOU WON!</h2>
+            <p id="winDesc">Discover your digital reward.</p>
+            <button onclick="claimPrize()"
+                style="background: #000; color: #fff; padding: 15px 30px; border-radius: 50px; border: none; font-weight: 800; margin-top: 20px; cursor: pointer;">CLAIM
+                NOW</button>
+        </div>
+    </div>
+
     <script>
+        const prizes = [
+            { label: "20% OFF", color: "#ff4d00", value: "DISCOUNT20" },
+            { label: "FREE GUIDE", color: "#ffffff", value: "DIGITAL_GUIDE" },
+            { label: "LAB ACCESS", color: "#ff4d00", value: "LAB_REPORT" },
+            { label: "₹100 CREDIT", color: "#ffffff", value: "CREDIT100" },
+            { label: "SKIN X-RAY", color: "#ff4d00", value: "SKIN_TOOL" },
+            { label: "FREE BOTTLE", color: "#ffffff", value: "FREE_GIFT" }
+        ];
+
+        const wheel = document.getElementById('wheel');
+        prizes.forEach((p, i) => {
+            const seg = document.createElement('div');
+            seg.className = 'wheel-segment';
+            seg.style.backgroundColor = p.color;
+            seg.style.transform = `rotate(${i * 60}deg) skewY(-30deg)`;
+            seg.innerHTML = `<div style="transform: skewY(30deg) rotate(30deg); width: 100px;">${p.label}</div>`;
+            wheel.appendChild(seg);
+        });
+
+        function openWheel() {
+            document.getElementById('wheelOverlay').style.display = 'flex';
+            setTimeout(spinWheel, 500);
+        }
+
+        function spinWheel() {
+            const randomDegree = Math.floor(Math.random() * 3600) + 720;
+            wheel.style.transform = `rotate(${randomDegree}deg)`;
+
+            setTimeout(() => {
+                const modal = document.getElementById('winModal');
+                modal.style.display = 'block';
+                const prizeIndex = Math.floor(((randomDegree % 360) / 60));
+                const win = prizes[5 - prizeIndex];
+                document.getElementById('winText').innerText = `WON: ${win.label}`;
+            }, 4500);
+        }
+
+        function claimPrize() {
+            alert("Digital delivery initiated! Check your email.");
+            location.reload();
+        }
+
         // Scarcity simulation
         setInterval(() => {
             const units = document.getElementById('units');
