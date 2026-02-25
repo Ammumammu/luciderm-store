@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUCIDERM | Scientific Transparency Skincare</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --text: #ffffff;
+            --accent: #ff4d00;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #888;
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+
+        .product-card {
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .price span {
+            text-decoration: line-through;
+            font-size: 1rem;
+            color: #555;
+            margin-right: 10px;
+        }
+
+        .cta-button {
+            display: block;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: transform 0.2s;
+            margin-top: 20px;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            background: #e64500;
+        }
+
+        .transparency-box {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .badge {
+            background: #111;
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            border: 1px solid #222;
+        }
+
+        .footer {
+            padding: 40px;
+            font-size: 0.8rem;
+            color: #444;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="hero">
+        <div class="logo">LUCIDERM</div>
+        <div class="tagline">The first Indian skincare brand to share 100% of our lab records. No secrets. Just Science.
+        </div>
+
+        <div class="product-card">
+            <h2 style="margin: 0; font-weight: 400;">INVISIBLE SHIELD</h2>
+            <p style="color: #ff4d00; font-size: 0.9rem; margin: 5px 0;">Ultra-Light SPF 50+ Sunscreen</p>
+
+            <div class="price">
+                <span>₹899</span> ₹499
+            </div>
+
+            <ul style="text-align: left; font-size: 0.9rem; padding-left: 20px;">
+                <li>Zero White Cast (Indian Skin Tested)</li>
+                <li>Hydrating Hybrid Formula</li>
+                <li>pH Balanced & Non-Comedogenic</li>
+            </ul>
+
+            <a href="https://razorpay.me/@ajaykumarporeddivar" class="cta-button">
+                PRE-ORDER & SECURE 45% OFF
+            </a>
+            <p style="font-size: 0.7rem; color: #666; margin-top: 15px;">Ships in 14 days. Limited to first 100 orders.
+            </p>
+        </div>
+
+        <div class="transparency-box">
+            <span class="badge">🔬 Lab Certified</span>
+            <span class="badge">🚫 Sulfate Free</span>
+            <span class="badge">🇮🇳 Made in India</span>
+        </div>
+    </section>
+
+    <footer class="footer">
+        © 2026 INDIA FIRST FACTORY | Powered by Luciderm Autonomous Engine
+    </footer>
+
+</body>
+
+</html>
