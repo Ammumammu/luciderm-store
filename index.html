@@ -457,44 +457,56 @@
 
         const numPrizes = prizes.length;
         const arc = (2 * Math.PI) / numPrizes;
-        let startAngle = 0;
-        let currentRotation = 0;
 
         function drawWheel() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             for (let i = 0; i < numPrizes; i++) {
-                const angle = startAngle + i * arc;
+                const angle = i * arc;
                 ctx.fillStyle = prizes[i].color;
                 ctx.beginPath();
                 ctx.moveTo(225, 225);
                 ctx.arc(225, 225, 225, angle, angle + arc);
                 ctx.fill();
+
+                // Borders
                 ctx.strokeStyle = "rgba(0, 255, 65, 0.2)";
-                ctx.lineWidth = 2;
+                ctx.lineWidth = 1;
                 ctx.stroke();
 
-                // Draw Text
+                // Draw Text (Radial)
                 ctx.save();
                 ctx.translate(225, 225);
                 ctx.rotate(angle + arc / 2);
                 ctx.fillStyle = prizes[i].textColor;
-                ctx.font = "bold 16px Space Grotesk";
+                ctx.font = "bold 14px Space Grotesk";
                 ctx.textAlign = "right";
-                ctx.fillText(prizes[i].label, 200, 10);
+                // Adjust text rotation to be readable
+                let textAngle = angle + arc / 2;
+                if (textAngle > Math.PI / 2 && textAngle < 3 * Math.PI / 2) {
+                    ctx.rotate(Math.PI);
+                    ctx.textAlign = "left";
+                    ctx.fillText(prizes[i].label, -200, 5);
+                } else {
+                    ctx.fillText(prizes[i].label, 200, 5);
+                }
                 ctx.restore();
             }
 
-            // Draw Center
+            // Center Piece
             ctx.fillStyle = "#000";
             ctx.beginPath();
-            ctx.arc(225, 225, 40, 0, 2 * Math.PI);
+            ctx.arc(225, 225, 45, 0, 2 * Math.PI);
             ctx.fill();
-            ctx.strokeStyle = "#00ff41";
+            ctx.strokeStyle = "var(--pitch-green)";
+            ctx.lineWidth = 2;
             ctx.stroke();
-            ctx.fillStyle = "#00ff41";
-            ctx.font = "bold 10px Space Grotesk";
+
+            ctx.fillStyle = "var(--pitch-green)";
+            ctx.font = "900 12px Space Grotesk";
             ctx.textAlign = "center";
-            ctx.fillText("LUCID", 225, 228);
+            ctx.fillText("LUCIDERM", 225, 225);
+            ctx.font = "700 8px Space Grotesk";
+            ctx.fillText("LAB_READY", 225, 235);
         }
 
         drawWheel();
@@ -504,48 +516,61 @@
         spinBtn.addEventListener('click', () => {
             if (spinning) return;
             if (!email.value || !email.value.includes('@')) {
-                email.style.borderColor = "red";
-                setTimeout(() => email.style.borderColor = "", 1000);
+                email.style.borderColor = "var(--pitch-green)";
+                setTimeout(() => email.style.borderColor = "var(--glass-border)", 2000);
                 return;
             }
 
             spinning = true;
-            spinBtn.innerText = "RUNNING_SIMULATION...";
+            result.style.display = 'none';
+            spinBtn.innerText = "SIMULATING_OUTCOME...";
 
-            const extraSpins = 5 + Math.random() * 5;
-            const targetPrizeIndex = Math.floor(Math.random() * (numPrizes - 1)); // Never hit 'Try Again' for first-time delight
-            const targetRotation = (extraSpins * 360) + (360 - (targetPrizeIndex * (360 / numPrizes))) - (360 / numPrizes / 2);
+            const extraSpins = 8 + Math.floor(Math.random() * 5);
+            const targetPrizeIndex = Math.floor(Math.random() * (numPrizes - 1)); // Bias away from "Try Again"
 
-            currentRotation = targetRotation;
-            canvas.style.transform = `rotate(${targetRotation}deg)`;
+            /* 
+               LOGIC FIX: 
+               Pointer is at 270deg (top). 
+               Slice i starts at (i * 60) and ends at (i+1 * 60).
+               To put slice i center at top:
+               (i + 0.5) * 60 + Rotation = 270
+               Rotation = 270 - (i + 0.5) * 60
+            */
+            const rotationDegrees = (extraSpins * 360) + (270 - (targetPrizeIndex + 0.5) * (360 / numPrizes));
+
+            canvas.style.transform = `rotate(${rotationDegrees}deg)`;
 
             setTimeout(() => {
                 spinning = false;
                 result.style.display = 'block';
                 result.style.transform = 'scale(1)';
                 const winningPrize = prizes[targetPrizeIndex].label;
-                result.innerHTML = `SUCCESS: GRANTED [${winningPrize}]<br><small style="opacity: 0.7;">Check your inbox for Batch_001 credentials.</small>`;
-                spinBtn.innerText = "ACCESS_SECURED";
+                result.innerHTML = `OBSERVE_AND_UPDATE: SUCCESS [${winningPrize}]<br><small style="opacity: 0.6; letter-spacing: 0;">PRE-ORDER_BATCH_001_LOCKED_FOR_${email.value.toUpperCase()}</small>`;
+                spinBtn.innerText = "ACCESS_GRANTED_001";
                 startConfetti();
-            }, 6200);
+            }, 6100);
         });
 
-        // --- Basic Confetti ---
+        // --- Optimized Confetti ---
         let particles = [];
+        let animationFrame;
         function startConfetti() {
+            particles = [];
             confettiCanvas.width = window.innerWidth;
             confettiCanvas.height = window.innerHeight;
-            for (let i = 0; i < 100; i++) {
+            for (let i = 0; i < 150; i++) {
                 particles.push({
                     x: Math.random() * window.innerWidth,
-                    y: -10,
-                    size: Math.random() * 8 + 4,
+                    y: -20,
+                    size: Math.random() * 10 + 2,
                     color: Math.random() > 0.5 ? "#00ff41" : "#ffffff",
-                    speed: Math.random() * 5 + 2,
-                    angle: Math.random() * 6.28
+                    speed: Math.random() * 6 + 3,
+                    angle: Math.random() * 6.28,
+                    rot: Math.random() * 0.2
                 });
             }
-            requestAnimationFrame(updateConfetti);
+            if (animationFrame) cancelAnimationFrame(animationFrame);
+            updateConfetti();
         }
 
         function updateConfetti() {
@@ -553,11 +578,16 @@
             particles.forEach((p, i) => {
                 p.y += p.speed;
                 p.x += Math.sin(p.angle) * 2;
+                p.angle += p.rot;
                 cCtx.fillStyle = p.color;
-                cCtx.fillRect(p.x, p.y, p.size, p.size);
+                cCtx.save();
+                cCtx.translate(p.x, p.y);
+                cCtx.rotate(p.angle);
+                cCtx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                cCtx.restore();
                 if (p.y > window.innerHeight) particles.splice(i, 1);
             });
-            if (particles.length > 0) requestAnimationFrame(updateConfetti);
+            if (particles.length > 0) animationFrame = requestAnimationFrame(updateConfetti);
         }
     </script>
 </body>
