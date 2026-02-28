@@ -4,591 +4,922 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUCIDERM | 100% Transparent Skincare // Bangalore</title>
+    <title>LUCIDERM — Radical Ingredient Transparency. Bangalore Labs.</title>
+    <meta name="description"
+        content="100% transparent skincare formulated for Indian skin. Every percentage disclosed. Every batch tracked. Direct from Bangalore.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;900&family=Space+Grotesk:wght@300;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
         rel="stylesheet">
+
     <style>
+        /* ═══════════════════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════════════════ */
         :root {
-            --bg: #000000;
-            --pitch-green: #00ff41;
-            --glass: rgba(255, 255, 255, 0.02);
-            --glass-border: rgba(0, 255, 65, 0.15);
-            --font-heading: 'Outfit', sans-serif;
-            --font-body: 'Space Grotesk', sans-serif;
-            --glow: 0 0 15px rgba(0, 255, 65, 0.4);
+            --bg: #050505;
+            --bg-1: #0a0a0a;
+            --bg-2: #0f0f0f;
+            --panel: rgba(255, 255, 255, 0.025);
+            --panel-hover: rgba(0, 255, 65, 0.04);
+            --green: #00ff41;
+            --green-dim: rgba(0, 255, 65, 0.12);
+            --green-glow: rgba(0, 255, 65, 0.35);
+            --white: #f0f0ec;
+            --muted: #555;
+            --muted-2: #333;
+            --border: rgba(0, 255, 65, 0.12);
+            --border-hi: rgba(0, 255, 65, 0.4);
+            --heading: 'Bebas Neue', sans-serif;
+            --body: 'Syne', sans-serif;
+            --mono: 'IBM Plex Mono', monospace;
+            --r-sm: 8px;
+            --r-md: 16px;
+            --r-lg: 28px;
+            --r-xl: 40px;
         }
 
-        * {
+        /* ═══════════════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════════════ */
+        *,
+        *::before,
+        *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+
+        html {
             scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--bg);
-            color: #fff;
-            font-family: var(--font-body);
+            font-family: var(--body);
+            background: var(--bg);
+            color: var(--white);
             overflow-x: hidden;
-            line-height: 1.6;
+            cursor: none;
         }
 
-        /* --- Ambient Grid Background --- */
-        .ambient-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background:
-                linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
+        img {
+            display: block;
+            max-width: 100%;
         }
 
-        .ambient-glow {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(0, 255, 65, 0.05) 0%, transparent 70%);
-            transform: translate(-50%, -50%);
-            z-index: -1;
-            filter: blur(100px);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        /* --- Nav --- */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 30px 0;
-            border-bottom: 1px solid var(--glass-border);
-            margin-bottom: 60px;
-        }
-
-        .logo {
-            font-family: var(--font-heading);
-            font-weight: 900;
-            font-size: 2rem;
-            letter-spacing: -2px;
-            color: #fff;
+        a {
+            color: inherit;
             text-decoration: none;
         }
 
-        .logo span {
-            color: var(--pitch-green);
-            text-shadow: var(--glow);
+        button {
+            cursor: none;
+            font-family: var(--body);
         }
 
-        /* --- Hero --- */
-        .hero {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 60px;
-            align-items: center;
-            min-height: 80vh;
-        }
-
-        .hero-content h1 {
-            font-family: var(--font-heading);
-            font-weight: 900;
-            font-size: 5.5rem;
-            line-height: 0.85;
-            margin-bottom: 30px;
-            letter-spacing: -4px;
-        }
-
-        .hero-content h1 span {
-            display: block;
-            color: var(--pitch-green);
-            text-shadow: var(--glow);
-        }
-
-        .hero-content p {
-            font-size: 1.2rem;
-            color: #888;
-            max-width: 500px;
-            margin-bottom: 50px;
-        }
-
-        /* --- Product Grid --- */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-top: 100px;
-        }
-
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 32px;
-            padding: 40px;
-            position: relative;
-            transition: 0.4s ease;
-            overflow: hidden;
-        }
-
-        .glass-card:hover {
-            border-color: var(--pitch-green);
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(0, 255, 65, 0.1);
-        }
-
-        .glass-card::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(0, 255, 65, 0.05), transparent);
-            transform: rotate(45deg);
-            transition: 0.5s;
-        }
-
-        .glass-card:hover::after {
-            left: 100%;
-        }
-
-        .card-tag {
-            font-size: 0.6rem;
-            letter-spacing: 3px;
-            color: var(--pitch-green);
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .formula-list {
-            list-style: none;
-            margin: 25px 0;
-            font-size: 0.85rem;
-        }
-
-        .formula-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .formula-item span:last-child {
-            color: var(--pitch-green);
-            font-weight: 700;
-        }
-
-        /* --- Money Wheel --- */
-        .wheel-section {
-            margin-top: 150px;
-            text-align: center;
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 48px;
-            padding: 80px;
-            position: relative;
-        }
-
-        .wheel-container {
-            width: 300px;
-            height: 300px;
-            border: 5px solid var(--glass-border);
+        /* ═══════════════════════════════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════════════════════════════ */
+        #cursor-dot {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            margin: 40px auto;
+            background: var(--green);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: transform 0.08s, width 0.2s, height 0.2s, opacity 0.2s;
+            box-shadow: 0 0 12px var(--green-glow);
+        }
+
+        #cursor-ring {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 255, 65, 0.5);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: transform 0.18s ease-out, width 0.3s, height 0.3s, opacity 0.3s;
+        }
+
+        body.cursor-hover #cursor-dot {
+            width: 12px;
+            height: 12px;
+        }
+
+        body.cursor-hover #cursor-ring {
+            width: 56px;
+            height: 56px;
+            border-color: var(--green);
+        }
+
+        /* ═══════════════════════════════════════════════════════
+   SCROLL PROGRESS
+═══════════════════════════════════════════════════════ */
+        #scroll-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            height: 2px;
+            background: var(--bg);
+        }
+
+        #scroll-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--green);
+            box-shadow: 0 0 10px var(--green-glow);
+            transition: width 0.1s linear;
+        }
+
+        /* ═══════════════════════════════════════════════════════
+   AMBIENT BACKGROUND
+═══════════════════════════════════════════════════════ */
+        .ambient {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .ambient-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 255, 65, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, 0.025) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+        }
+
+        .ambient-radial {
+            position: absolute;
+            width: 900px;
+            height: 900px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 65, 0.06) 0%, transparent 65%);
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            filter: blur(60px);
+            animation: float 12s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0)
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(-40px)
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════════════════ */
+        .wrap {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 48px;
+        }
+
+        @media(max-width:768px) {
+            .wrap {
+                padding: 0 24px;
+            }
+        }
+
+        section {
             position: relative;
+        }
+
+        /* ═══════════════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════════════ */
+        .nav-outer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            transition: background 0.4s, border-color 0.4s;
+        }
+
+        .nav-outer.scrolled {
+            background: rgba(5, 5, 5, 0.92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav {
             display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .logo {
+            font-family: var(--heading);
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            color: var(--white);
+        }
+
+        .logo-dot {
+            color: var(--green);
+            text-shadow: 0 0 20px var(--green-glow);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+            list-style: none;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--green);
+        }
+
+        .nav-cta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1);
-            background: conic-gradient(#111 0deg 72deg,
-                    #0a0a0a 72deg 144deg,
-                    #111 144deg 216deg,
-                    #0a0a0a 216deg 288deg,
-                    #111 288deg 360deg);
+            gap: 8px;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 12px 24px;
+            border-radius: 100px;
+            border: none;
+            transition: all 0.25s;
+            white-space: nowrap;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--green);
+            color: var(--green);
+        }
+
+        .btn-primary {
+            background: var(--green);
+            color: #000;
+            font-weight: 700;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 30px var(--green-glow);
+            transform: translateY(-2px);
+        }
+
+        /* ═══════════════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════════════ */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 72px;
+        }
+
+        .hero-inner {
+            display: grid;
+            grid-template-columns: 1fr 0.7fr;
+            gap: 80px;
+            align-items: center;
+            padding: 80px 0 60px;
+        }
+
+        .hero-eyebrow {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            flex-shrink: 0;
+            width: 30px;
+            height: 1px;
+            background: var(--green);
+        }
+
+        h1.hero-h1 {
+            font-family: var(--heading);
+            font-size: clamp(72px, 10vw, 140px);
+            line-height: 0.88;
+            letter-spacing: 2px;
+            margin-bottom: 36px;
+        }
+
+        .hero-h1 .line-green {
+            color: var(--green);
+            display: block;
+            text-shadow: 0 0 60px rgba(0, 255, 65, 0.25);
+        }
+
+        .hero-h1 .line-ghost {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+            display: block;
+        }
+
+        .hero-sub {
+            font-size: 1.05rem;
+            color: var(--muted);
+            max-width: 480px;
+            line-height: 1.75;
+            margin-bottom: 48px;
+            font-weight: 400;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 64px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat-num {
+            font-family: var(--heading);
+            font-size: 2.8rem;
+            color: var(--green);
+            letter-spacing: 1px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            color: var(--muted);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        .hero-visual {
+            position: relative;
+        }
+
+        .hero-img-wrap {
+            border-radius: var(--r-xl);
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--border);
+        }
+
+        .hero-img-wrap img {
+            width: 100%;
+            height: 520px;
+            object-fit: cover;
+            filter: grayscale(0.3) contrast(1.1);
+            transition: transform 8s ease;
+        }
+
+        .hero-img-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(5, 5, 5, 0.85) 100%);
+        }
+
+        .hero-batch-tag {
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
+            right: 24px;
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .batch-id {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            color: var(--green);
+            letter-spacing: 0.15em;
+        }
+
+        .batch-status {
+            font-size: 0.65rem;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .live-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: blink 1.5s ease infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: 0.2
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════
+   PRODUCTS
+═══════════════════════════════════════════════════════ */
+        .products-section {
+            padding: 120px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .product-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--r-xl);
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .product-card:hover {
+            border-color: var(--border-hi);
+            transform: translateY(-8px);
+        }
+
+        .product-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            filter: grayscale(0.2);
+            transition: transform 0.5s ease;
+        }
+
+        .product-body {
+            padding: 32px;
+        }
+
+        .product-name {
+            font-family: var(--heading);
+            font-size: 2rem;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .product-desc {
+            font-size: 0.8rem;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .formula-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 0.78rem;
+        }
+
+        .formula-pct {
+            font-family: var(--mono);
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        /* ═══════════════════════════════════════════════════════
+   SPIN WHEEL
+═══════════════════════════════════════════════════════ */
+        .wheel-section {
+            padding: 120px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .wheel-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .wheel-wrap {
+            position: relative;
+            width: 450px;
+            height: 450px;
+            margin: 0 auto;
         }
 
         .wheel-pointer {
             position: absolute;
-            top: -20px;
+            top: -10px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 0;
             border-left: 20px solid transparent;
             border-right: 20px solid transparent;
-            border-top: 30px solid var(--pitch-green);
-            z-index: 10;
+            border-top: 35px solid var(--green);
+            z-index: 20;
+            filter: drop-shadow(0 0 10px var(--green));
         }
 
-        /* --- Lead Form --- */
-        .lead-form {
-            max-width: 500px;
-            margin: 60px auto 0;
+        #spin-canvas {
+            border-radius: 50%;
+            border: 4px solid var(--border);
+            box-shadow: 0 0 50px rgba(0, 255, 65, 0.05);
+            transition: transform 6s cubic-bezier(0.15, 0, 0.15, 1);
         }
 
-        .input-group {
-            position: relative;
-            margin-bottom: 20px;
+        .spin-form {
+            margin-top: 32px;
         }
 
-        input {
+        .spin-input {
             width: 100%;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--glass-border);
-            padding: 20px 25px;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
             border-radius: 100px;
+            padding: 20px 30px;
             color: #fff;
-            font-family: var(--font-body);
-            font-size: 1rem;
+            font-family: var(--mono);
+            font-size: 0.8rem;
             outline: none;
             transition: 0.3s;
+            margin-bottom: 16px;
+            text-align: center;
         }
 
-        input:focus {
-            border-color: var(--pitch-green);
-            background: rgba(0, 255, 65, 0.02);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+        .spin-input:focus {
+            border-color: var(--green);
         }
 
-        .cta-btn {
-            display: inline-block;
-            background: var(--pitch-green);
-            color: #000;
-            padding: 20px 60px;
-            border-radius: 100px;
-            text-decoration: none;
-            font-family: var(--font-heading);
-            font-weight: 900;
-            font-size: 1.2rem;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            width: 100%;
+        .spin-result {
+            margin-top: 24px;
+            padding: 24px;
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid var(--green);
+            border-radius: var(--r-md);
+            display: none;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            color: var(--green);
         }
 
-        .cta-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 255, 65, 0.4);
+        /* ═══════════════════════════════════════════════════════
+   REVEAL ANIMATIONS
+═══════════════════════════════════════════════════════ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: 0.8s ease-out;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        .reveal-delay-1 {
+            transition-delay: 0.1s;
+        }
+
+        .reveal-delay-2 {
+            transition-delay: 0.2s;
+        }
+
+        .reveal-delay-3 {
+            transition-delay: 0.3s;
         }
 
         footer {
-            margin-top: 150px;
-            padding: 60px 0;
-            border-top: 1px solid var(--glass-border);
+            border-top: 1px solid var(--border);
+            padding: 80px 0 40px;
             text-align: center;
-            font-size: 0.7rem;
-            color: #444;
-            letter-spacing: 5px;
         }
 
-        .result-dialog {
-            display: none;
-            margin-top: 30px;
-            padding: 20px;
-            background: rgba(0, 255, 65, 0.1);
-            border: 1px solid var(--pitch-green);
-            border-radius: 16px;
-            color: var(--pitch-green);
-            font-weight: 700;
+        .footer-legal {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            color: var(--muted-2);
+            letter-spacing: 0.15em;
         }
 
-        @media (max-width: 900px) {
-            .hero {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
+        @media(max-width: 1024px) {
 
-            .hero-content h1 {
-                font-size: 3.5rem;
-            }
-
-            .hero-content p {
-                margin: 0 auto 50px;
-            }
-
-            .product-grid {
+            .hero-inner,
+            .wheel-layout {
                 grid-template-columns: 1fr;
             }
 
-            .wheel-section {
-                padding: 40px 20px;
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wheel-wrap {
+                width: 320px;
+                height: 320px;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="ambient-bg"></div>
-    <div class="ambient-glow"></div>
 
-    <div class="container">
-        <nav>
-            <a href="#" class="logo">LUCIDERM<span>.</span></a>
-            <div style="font-size: 0.6rem; letter-spacing: 5px; color: #666; font-weight: 700;">BANGALORE // LAB_READY
-            </div>
-        </nav>
-
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Truth is <span>Active.</span></h1>
-                <p>Radical ingredient transparency for the urban Indian skin. We disclose every percentage, every batch,
-                    and every source. Direct from Bangalore labs.</p>
-                <a href="#lab-access" class="cta-btn" style="width: auto;">SECURE_LAB_ACCESS</a>
-            </div>
-
-            <div class="glass-card" style="padding: 0; background: none; border: none; backdrop-filter: none;">
-                <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=1000"
-                    alt="Product Reveal"
-                    style="width: 100%; border-radius: 32px; filter: grayscale(1) contrast(1.2); opacity: 0.7;">
-            </div>
-        </section>
-
-        <section class="product-grid">
-            <!-- SPF 50 -->
-            <div class="glass-card">
-                <span class="card-tag">BATCH_001_SPF</span>
-                <h3 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 20px;">Hybrid Shield 50
-                </h3>
-                <p style="font-size: 0.8rem; color: #666;">Optimized for IV-VI skin tones. Zero white cast guaranteed.
-                </p>
-                <div class="formula-list">
-                    <div class="formula-item"><span>Zinc Oxide (Nano)</span><span>18.5%</span></div>
-                    <div class="formula-item"><span>Tinosorb M</span><span>4.0%</span></div>
-                    <div class="formula-item"><span>Niacinamide</span><span>2.5%</span></div>
-                </div>
-            </div>
-
-            <!-- VIT C -->
-            <div class="glass-card">
-                <span class="card-tag">BATCH_001_VITA</span>
-                <h3 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 20px;">Luminous 12</h3>
-                <p style="font-size: 0.8rem; color: #666;">Stabilized Vitamin C (SAP) for 24-month potency.</p>
-                <div class="formula-list">
-                    <div class="formula-item"><span>Vit-C (SAP)</span><span>12.0%</span></div>
-                    <div class="formula-item"><span>Ferulic Acid</span><span>0.5%</span></div>
-                    <div class="formula-item"><span>Vitamin E</span><span>1.0%</span></div>
-                </div>
-            </div>
-
-            <!-- FACE WASH -->
-            <div class="glass-card">
-                <span class="card-tag">BATCH_001_CLEAN</span>
-                <h3 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 20px;">Barrier Buffer
-                </h3>
-                <p style="font-size: 0.8rem; color: #666;">Soap-free, pH 5.5 adjusted surfactant blend.</p>
-                <div class="formula-list">
-                    <div class="formula-item"><span>Salicylic Acid</span><span>2.0%</span></div>
-                    <div class="formula-item"><span>Glycerin</span><span>5.0%</span></div>
-                    <div class="formula-item"><span>Panthenol</span><span>1.0%</span></div>
-                </div>
-            </div>
-        </section>
-
-        <section class="wheel-section" id="lab-access">
-            <span class="card-tag">GAMIFIED_ENROLLMENT</span>
-            <h2 style="font-family: var(--font-heading); font-size: 3.5rem; margin-bottom: 20px; letter-spacing: -2px;">
-                Secure Your Lab Privileges.</h2>
-            <p style="color: #888; margin-bottom: 60px; max-width: 600px; margin-left: auto; margin-right: auto;">Spin
-                to unlock early-access batches, digital formulation reports, or luxury credits for your first Luciderm
-                order.</p>
-
-            <div class="wheel-wrapper" style="position: relative; width: 450px; height: 450px; margin: 0 auto;">
-                <div class="wheel-pointer"
-                    style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 25px solid transparent; border-right: 25px solid transparent; border-top: 40px solid var(--pitch-green); z-index: 20; filter: drop-shadow(0 0 10px var(--pitch-green));">
-                </div>
-                <canvas id="wheel-canvas" width="450" height="450"
-                    style="border-radius: 50%; border: 8px solid var(--glass-border); box-shadow: 0 0 50px rgba(0, 255, 65, 0.1); transition: transform 6s cubic-bezier(0.15, 0, 0.15, 1);"></canvas>
-            </div>
-
-            <div class="lead-form" style="margin-top: 60px;">
-                <div class="input-group">
-                    <input type="email" id="email" placeholder="ENTER_EMAIL_FOR_RESULTS"
-                        style="text-align: center; font-weight: 700;">
-                </div>
-                <button class="cta-btn" id="spin-btn">INITIATE_SEQUENCE</button>
-                <div class="result-dialog" id="result"
-                    style="display: none; transform: scale(0.9); transition: 0.5s ease;"></div>
-            </div>
-
-            <canvas id="confetti"
-                style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100;"></canvas>
-        </section>
-
-        <section style="margin-top: 100px; text-align: center;">
-            <a href="../luciderm_games_arcade/index.html"
-                style="color: var(--pitch-green); text-decoration: none; font-size: 0.6rem; letter-spacing: 5px; font-weight: 700; opacity: 0.5; transition: 0.3s;"
-                onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">// ENTER_LUCIDERM_ARCADE</a>
-        </section>
-
-        <footer>
-            &copy; 2026 LUCIDERM SKINCARE // AJAY KUMAR POREDDIVAR // BANGALORE // DESIGN_SYSTEM_V4.2
-        </footer>
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+    <div id="scroll-bar">
+        <div id="scroll-fill"></div>
     </div>
 
+    <div class="ambient">
+        <div class="ambient-grid"></div>
+        <div class="ambient-radial"></div>
+    </div>
+
+    <canvas id="confetti-canvas" style="position:fixed; inset:0; pointer-events:none; z-index:100;"></canvas>
+
+    <div class="nav-outer" id="nav">
+        <div class="wrap">
+            <nav>
+                <a href="#" class="logo">LUCIDERM<span class="logo-dot">.</span></a>
+                <ul class="nav-links">
+                    <li><a href="#manifesto">Science</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#lab-access">Lab Access</a></li>
+                </ul>
+                <div class="nav-cta">
+                    <a href="#lab-access" class="btn btn-primary">Secure Lab Access</a>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <section class="hero-section">
+        <div class="wrap">
+            <div class="hero-inner">
+                <div class="hero-content">
+                    <div class="hero-eyebrow reveal">Bangalore // Batch_001</div>
+                    <h1 class="hero-h1 reveal reveal-delay-1">
+                        <span>TRUTH</span>
+                        <span class="line-green">IS</span>
+                        <span>ACTIVE<span style="color:var(--green)">.</span></span>
+                    </h1>
+                    <p class="hero-sub reveal reveal-delay-2">Radical ingredient transparency for the urban Indian skin.
+                        We disclose every percentage, every batch, every source. No shortcuts. Just science.</p>
+                    <div class="hero-ctas reveal reveal-delay-3">
+                        <a href="#lab-access" class="btn btn-primary">Secure Lab Access →</a>
+                    </div>
+                    <div class="hero-stats reveal reveal-delay-3">
+                        <div class="stat-item">
+                            <div class="stat-num">100%</div>
+                            <div class="stat-label">Transparent</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-num">IV–VI</div>
+                            <div class="stat-label">Skin types</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual reveal reveal-delay-2">
+                    <div class="hero-img-wrap">
+                        <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=900"
+                            alt="Luciderm Lab">
+                        <div class="hero-img-overlay"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="products-section" id="products">
+        <div class="wrap">
+            <h2 class="section-h2 reveal"
+                style="font-family:var(--heading); font-size: 5rem; line-height:0.9; margin-bottom:60px;">The <span
+                    style="color:var(--green)">active</span> lineup.</h2>
+            <div class="products-grid">
+                <div class="product-card reveal">
+                    <img class="product-img"
+                        src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&q=80&w=600"
+                        alt="SPF">
+                    <div class="product-body">
+                        <div class="product-name">HYBRID SHIELD 50</div>
+                        <p class="product-desc">No-white cast hybrid protection optimized for Indian tones.</p>
+                        <div class="formula-row"><span>Zinc Oxide (Nano)</span><span class="formula-pct">18.5%</span>
+                        </div>
+                        <div class="formula-row"><span>Tinosorb M</span><span class="formula-pct">4.0%</span></div>
+                    </div>
+                </div>
+                <div class="product-card reveal reveal-delay-1">
+                    <img class="product-img"
+                        src="https://images.unsplash.com/photo-1570194065650-d99fb4bedf0a?auto=format&fit=crop&q=80&w=600"
+                        alt="Vit C">
+                    <div class="product-body">
+                        <div class="product-name">LUMINOUS 12</div>
+                        <p class="product-desc">Stabilized 12% Vitamin C (SAP) for max potency and glow.</p>
+                        <div class="formula-row"><span>Vit-C (SAP)</span><span class="formula-pct">12.0%</span></div>
+                        <div class="formula-row"><span>Ferulic Acid</span><span class="formula-pct">0.5%</span></div>
+                    </div>
+                </div>
+                <div class="product-card reveal reveal-delay-2">
+                    <img class="product-img"
+                        src="https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&q=80&w=600"
+                        alt="Cleanser">
+                    <div class="product-body">
+                        <div class="product-name">BARRIER BUFFER</div>
+                        <p class="product-desc">Soap-free, pH 5.5 balanced cleanser for delicate barrier support.</p>
+                        <div class="formula-row"><span>Salicylic Acid</span><span class="formula-pct">2.0%</span></div>
+                        <div class="formula-row"><span>Glycerin</span><span class="formula-pct">5.0%</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="wheel-section" id="lab-access">
+        <div class="wrap">
+            <div class="wheel-layout">
+                <div class="wheel-text reveal">
+                    <h2 style="font-family:var(--heading); font-size: 5rem; line-height:0.9;">Secure <span
+                            style="color:var(--green)">Lab</span> Privileges.</h2>
+                    <p>Enter your field credentials and spin for early-access status.</p>
+                </div>
+                <div class="wheel-right reveal reveal-delay-2">
+                    <div class="wheel-wrap">
+                        <div class="wheel-pointer"></div>
+                        <canvas id="spin-canvas" width="450" height="450"></canvas>
+                    </div>
+                    <div class="spin-form">
+                        <input type="email" id="spin-email" class="spin-input" placeholder="YOUR_EMAIL_FOR_RESULTS">
+                        <button class="btn btn-primary" id="spin-btn"
+                            style="width:100%; height: 60px; font-size: 0.9rem;">INITIATE_SEQUENCE →</button>
+                        <div class="spin-result" id="spin-result"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-legal">© 2026 LUCIDERM SKINCARE // DESIGN_SYSTEM_V5.0 // OBSERVE_AND_UPDATE</div>
+    </footer>
+
     <script>
-        const canvas = document.getElementById('wheel-canvas');
-        const ctx = canvas.getContext('2d');
-        const spinBtn = document.getElementById('spin-btn');
-        const result = document.getElementById('result');
-        const email = document.getElementById('email');
-        const confettiCanvas = document.getElementById('confetti');
-        const cCtx = confettiCanvas.getContext('2d');
-
-        const prizes = [
-            { label: "10% OFF", color: "#000000", textColor: "#ffffff" },
-            { label: "LAB REPORT", color: "#001a06", textColor: "#00ff41" },
-            { label: "FREE SHIPPING", color: "#000000", textColor: "#ffffff" },
-            { label: "VIP ACCESS", color: "#001a06", textColor: "#00ff41" },
-            { label: "₹100 CREDIT", color: "#000000", textColor: "#ffffff" },
-            { label: "TRY AGAIN", color: "#111111", textColor: "#666666" }
-        ];
-
-        const numPrizes = prizes.length;
-        const arc = (2 * Math.PI) / numPrizes;
-
-        function drawWheel() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < numPrizes; i++) {
-                const angle = i * arc;
-                ctx.fillStyle = prizes[i].color;
-                ctx.beginPath();
-                ctx.moveTo(225, 225);
-                ctx.arc(225, 225, 225, angle, angle + arc);
-                ctx.fill();
-
-                // Borders
-                ctx.strokeStyle = "rgba(0, 255, 65, 0.2)";
-                ctx.lineWidth = 1;
-                ctx.stroke();
-
-                // Draw Text (Radial)
-                ctx.save();
-                ctx.translate(225, 225);
-                ctx.rotate(angle + arc / 2);
-                ctx.fillStyle = prizes[i].textColor;
-                ctx.font = "bold 14px Space Grotesk";
-                ctx.textAlign = "right";
-                // Adjust text rotation to be readable
-                let textAngle = angle + arc / 2;
-                if (textAngle > Math.PI / 2 && textAngle < 3 * Math.PI / 2) {
-                    ctx.rotate(Math.PI);
-                    ctx.textAlign = "left";
-                    ctx.fillText(prizes[i].label, -200, 5);
-                } else {
-                    ctx.fillText(prizes[i].label, 200, 5);
-                }
-                ctx.restore();
-            }
-
-            // Center Piece
-            ctx.fillStyle = "#000";
-            ctx.beginPath();
-            ctx.arc(225, 225, 45, 0, 2 * Math.PI);
-            ctx.fill();
-            ctx.strokeStyle = "var(--pitch-green)";
-            ctx.lineWidth = 2;
-            ctx.stroke();
-
-            ctx.fillStyle = "var(--pitch-green)";
-            ctx.font = "900 12px Space Grotesk";
-            ctx.textAlign = "center";
-            ctx.fillText("LUCIDERM", 225, 225);
-            ctx.font = "700 8px Space Grotesk";
-            ctx.fillText("LAB_READY", 225, 235);
+        /* Cursor Logic */
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+        let mx = -100, my = -100, rx = -100, ry = -100;
+        document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+        function animCursor() {
+            dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+            rx += (mx - rx) * 0.15; ry += (my - ry) * 0.15;
+            ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+            requestAnimationFrame(animCursor);
         }
+        animCursor();
 
-        drawWheel();
-
-        let spinning = false;
-
-        spinBtn.addEventListener('click', () => {
-            if (spinning) return;
-            if (!email.value || !email.value.includes('@')) {
-                email.style.borderColor = "var(--pitch-green)";
-                setTimeout(() => email.style.borderColor = "var(--glass-border)", 2000);
-                return;
-            }
-
-            spinning = true;
-            result.style.display = 'none';
-            spinBtn.innerText = "SIMULATING_OUTCOME...";
-
-            const extraSpins = 8 + Math.floor(Math.random() * 5);
-            const targetPrizeIndex = Math.floor(Math.random() * (numPrizes - 1)); // Bias away from "Try Again"
-
-            /* 
-               LOGIC FIX: 
-               Pointer is at 270deg (top). 
-               Slice i starts at (i * 60) and ends at (i+1 * 60).
-               To put slice i center at top:
-               (i + 0.5) * 60 + Rotation = 270
-               Rotation = 270 - (i + 0.5) * 60
-            */
-            const rotationDegrees = (extraSpins * 360) + (270 - (targetPrizeIndex + 0.5) * (360 / numPrizes));
-
-            canvas.style.transform = `rotate(${rotationDegrees}deg)`;
-
-            setTimeout(() => {
-                spinning = false;
-                result.style.display = 'block';
-                result.style.transform = 'scale(1)';
-                const winningPrize = prizes[targetPrizeIndex].label;
-                result.innerHTML = `OBSERVE_AND_UPDATE: SUCCESS [${winningPrize}]<br><small style="opacity: 0.6; letter-spacing: 0;">PRE-ORDER_BATCH_001_LOCKED_FOR_${email.value.toUpperCase()}</small>`;
-                spinBtn.innerText = "ACCESS_GRANTED_001";
-                startConfetti();
-            }, 6100);
+        /* Scroll Progress */
+        const fill = document.getElementById('scroll-fill');
+        window.addEventListener('scroll', () => {
+            const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+            fill.style.width = pct + '%';
         });
 
-        // --- Optimized Confetti ---
-        let particles = [];
-        let animationFrame;
-        function startConfetti() {
-            particles = [];
-            confettiCanvas.width = window.innerWidth;
-            confettiCanvas.height = window.innerHeight;
-            for (let i = 0; i < 150; i++) {
-                particles.push({
-                    x: Math.random() * window.innerWidth,
-                    y: -20,
-                    size: Math.random() * 10 + 2,
-                    color: Math.random() > 0.5 ? "#00ff41" : "#ffffff",
-                    speed: Math.random() * 6 + 3,
-                    angle: Math.random() * 6.28,
-                    rot: Math.random() * 0.2
-                });
-            }
-            if (animationFrame) cancelAnimationFrame(animationFrame);
-            updateConfetti();
+        /* Intersection Observer */
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+        /* Spin Wheel */
+        const sc = document.getElementById('spin-canvas');
+        const sctx = sc.getContext('2d');
+        const prizes = [
+            { label: "10% OFF", color: "#000000", text: "#fff" },
+            { label: "LAB REPORT", color: "#001a06", text: "#00ff41" },
+            { label: "FREE SHIPPING", color: "#000000", text: "#fff" },
+            { label: "VIP ACCESS", color: "#001a06", text: "#00ff41" },
+            { label: "₹100 CREDIT", color: "#000000", text: "#fff" },
+            { label: "EARLY BIRD", color: "#001a06", text: "#00ff41" }
+        ];
+        const arc = (2 * Math.PI) / prizes.length;
+
+        function drawWheel(angle = 0) {
+            sctx.clearRect(0, 0, 450, 450);
+            prizes.forEach((p, i) => {
+                const start = angle + i * arc;
+                sctx.fillStyle = p.color;
+                sctx.beginPath();
+                sctx.moveTo(225, 225);
+                sctx.arc(225, 225, 225, start, start + arc);
+                sctx.fill();
+
+                sctx.save();
+                sctx.translate(225, 225);
+                sctx.rotate(start + arc / 2);
+                sctx.fillStyle = p.text;
+                sctx.font = '700 16px IBM Plex Mono';
+                sctx.textAlign = 'right';
+                sctx.fillText(p.label, 210, 8);
+                sctx.restore();
+            });
+
+            sctx.fillStyle = '#000';
+            sctx.beginPath(); sctx.arc(225, 225, 50, 0, Math.PI * 2); sctx.fill();
+            sctx.strokeStyle = '#00ff41'; sctx.lineWidth = 2; sctx.stroke();
+            sctx.fillStyle = '#00ff41'; sctx.font = '700 12px IBM Plex Mono'; sctx.textAlign = 'center';
+            sctx.fillText('LUCID', 225, 229);
         }
 
-        function updateConfetti() {
-            cCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-            particles.forEach((p, i) => {
-                p.y += p.speed;
-                p.x += Math.sin(p.angle) * 2;
-                p.angle += p.rot;
-                cCtx.fillStyle = p.color;
-                cCtx.save();
-                cCtx.translate(p.x, p.y);
-                cCtx.rotate(p.angle);
-                cCtx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
-                cCtx.restore();
-                if (p.y > window.innerHeight) particles.splice(i, 1);
-            });
-            if (particles.length > 0) animationFrame = requestAnimationFrame(updateConfetti);
-        }
+        drawWheel(0);
+
+        let isSpinning = false;
+        document.getElementById('spin-btn').addEventListener('click', () => {
+            if (isSpinning) return;
+            const email = document.getElementById('spin-email').value;
+            if (!email.includes('@')) return;
+
+            isSpinning = true;
+            document.getElementById('spin-btn').innerText = 'SIMULATING_OUTCOME...';
+
+            const rounds = 5 + Math.random() * 5;
+            const targetIdx = Math.floor(Math.random() * prizes.length);
+            // Pointer is at Top (1.5 PI)
+            // Target rotation = (1.5 PI) - (targetIdx * arc) - (arc/2)
+            const finalAngle = (rounds * Math.PI * 2) + (1.5 * Math.PI) - (targetIdx * arc) - (arc / 2);
+
+            sc.style.transition = 'transform 6s cubic-bezier(0.15, 0, 0.15, 1)';
+            sc.style.transform = `rotate(${finalAngle}rad)`;
+
+            setTimeout(() => {
+                const result = document.getElementById('spin-result');
+                result.style.display = 'block';
+                result.innerHTML = `✓ ACCESS_GRANTED [${prizes[targetIdx].label}]<br>Check your inbox for credentials.`;
+                document.getElementById('spin-btn').innerText = 'ACCESS_SECURED ✓';
+            }, 6500);
+        });
     </script>
 </body>
 
